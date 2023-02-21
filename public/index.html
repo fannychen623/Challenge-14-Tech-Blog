@@ -16,28 +16,28 @@
         <div class="navbar-start">
           <a class="navbar-item" href="/">Home</a>
           <a class="navbar-item" href="/dashboard">Dashboard</a>
-          <!-- Conditionally render login or logout links -->
-          {{#if logged_in}}
-          <a class="navbar-item" href="/login">Login</a> |
-          <a class="navbar-item"><button class="no-button" id="logout">Logout</button></a>
-          {{/if}}
+          <a class="navbar-item" href="/login">Login</a>
+          <a class="navbar-item" href="/loutout">Logout</a>
         </div>
       </div>
     </nav>
     <p class="is-size-3 has-text-weight-bold ml-5 m-5" id="page-title"><span>The Tech Blog</span></p>
   </header>
+
   <main class="container mt-5">
+    <div class="card">
+      <div class="card-content">
+        <p>{{blog.content}}</p>
+      </div>
+    </div>
     <!-- Render the sub layout -->
-    {{{ body }}}
+    <!-- {{{ body }}} -->
   </main>
-  <footer>
-    
-  </footer>
 
   <!-- Render script for logged in users only -->
-  {{#if logged_in}}
+  <!-- {{#if logged_in}} -->
   <script src="/js/logout.js"></script>
-  {{/if}}
+  <!-- {{/if}} -->
 </body>
 
 </html>

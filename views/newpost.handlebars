@@ -1,0 +1,31 @@
+<div class="card">
+    <header class="card-header pl-3">
+        <p class="card-header-title">Create New Post</p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            <form class="form new-blog-form">
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input class="input" type="text" id="blog-title" name="blog-title">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Content</label>
+                    <div class="control">
+                        <textarea class="textarea is-small" id="blog-content" name="blog-content"></textarea>
+                    </div>
+                </div>
+                <div class="field mb-2">
+                    <button type="submit" class="button is-fullwidth has-text-white" data-id="new-blog">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="field has-text-centered m-4">
+    <button class="button is-size-4 has-text-white" type="reset">+ New Post</button>
+</div>
+
+<script src="./js/dashboard.js"></script>

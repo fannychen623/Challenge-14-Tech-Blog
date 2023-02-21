@@ -1,24 +1,45 @@
-header, .project:not(:last-child) {
-  border-bottom: 1px solid #ccc;
+html {
+  background-color: #d9ead3;
 }
 
-.no-button {
+header {
+  background-color: #22100f;
+}
+
+.navbar {
+  background-color: #22100f;
+}
+
+.navbar a {
+  color: #d9ead3;
+  background-color: #22100f;
+}
+
+p span {
+  color: #22100f;
+  background-color: #d9ead3;
+  box-shadow: 5px 5px 0px 1px #A7A7A7;
+  padding: 10px 15px 10px 15px;
+  border-radius: 15px;
+}
+.card{
   background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #1b89bc;
-  text-decoration: none;
-  font-size: 100%;
 }
 
-.no-button:hover {
-  color: #065b83;
-  text-decoration: underline;
+.card-content {
+  color:#22100f;
+  border: 3px solid #22100f;
 }
 
-.dollar-amount {
-  color: #056605;
-  font-weight: bold;
-  margin-left: -5px;
+.card header {
+  background-color: #22100f;
+}
+
+.card header p {
+  color: #d9ead3;
+}
+
+.field button {
+  color: #d9ead3;
+  background-color: #22100f;
 }
