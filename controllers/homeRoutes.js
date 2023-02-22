@@ -27,26 +27,30 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/blog/:id', async (req, res) => {
+router.get('/blog/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
       include: [
         {
           model: User,
           attributes: ['username'],
         },
-        {
-          model: Comment,
-          attributes: ['comments', 'date_created'],
-        },
+        // {
+        //   model: Comment,
+        //   attributes: ['comments', 'date_created'],
+        // },
       ],
     });
 
     const blog = blogData.get({ plain: true });
 
-    res.render('blog', {
+    res.render('commentBlog', {
       ...blog,
-      logged_in: req.session.logged_in
+      logged_in: true
     });
   } catch (err) {
     res.status(500).json(err);
@@ -73,14 +77,51 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+// Use withAuth middleware to prevent access to route
+router.get('/dashboard/:id', withAuth, async (req, res) => {
+  try {
+    const blogData = await Blog.findByPk(req.params.id, {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+    });
+
+    const blog = blogData.get({ plain: true });
+
+    res.render('updateBlog', {
+      ...blog,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/newBlog', (req, res) => {
+  res.render('newBlog', {
+    logged_in: true
+  });
+});
+
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/dashboard');
+    res.redirect('dashboard');
     return;
   }
 
   res.render('login');
+});
+
+router.get('/signup', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('dashboard');
+    return;
+  }
+
+  res.render('signup');
 });
 
 module.exports = router;

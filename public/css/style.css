@@ -15,6 +15,17 @@ header {
   background-color: #22100f;
 }
 
+a.navbar-item:hover {
+  color: #d9ead3;
+  background-color: #22100f;
+}
+
+.navbar button {
+  color: #d9ead3;
+  background-color: #22100f;
+  border: none;
+}
+
 p span {
   color: #22100f;
   background-color: #d9ead3;

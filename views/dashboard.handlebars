@@ -1,17 +1,17 @@
 {{#if blogs.length}}
   {{#each blogs as |blog|}}
-  <a href="/blog/{{blog.id}}">
-    <div class="card">
+  <a href="/dashboard/{{blog.id}}">
+    <div class="card mb-5">
       <header class="card-header pl-3" style="background-color: #6a6a6a;">
         <p class="card-header-title has-text-white has-text-weight-normal">{{blog.title}}</p>
-        <p class="has-text-right has-text-white m-auto pr-5">{{format_time blog.date_created}}</p>
+        <p class="has-text-right has-text-white m-auto pr-5">{{format_date blog.date_created}}</p>
       </header>
     </div>
   </a>
   {{/each}}
 {{/if}}
-<div class="field has-text-centered m-6">
-  <button class="button is-size-4 has-text-white" onclick="window.location.href='/newpost';">+ New Post</button>
+<div class="field has-text-centered">
+  <a href="/newblog"><button class="button is-size-4 has-text-white">+ New Post</button></a>
 </div>
 
 <script src="./js/dashboard.js"></script>

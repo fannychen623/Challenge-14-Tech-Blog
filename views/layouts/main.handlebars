@@ -18,8 +18,9 @@
           <a class="navbar-item" href="/dashboard">Dashboard</a>
           <!-- Conditionally render login or logout links -->
           {{#if logged_in}}
-          <a class="navbar-item" href="/login">Login</a> |
-          <a class="navbar-item"><button class="no-button" id="logout">Logout</button></a>
+          <a class="navbar-item" href="/"><button class="no-button has-text-weight-bold is-size-6 pl-0" id="logout">Logout</button></a>
+          {{else}}
+          <a class="navbar-item" href="/login">Login</a>
           {{/if}}
         </div>
       </div>

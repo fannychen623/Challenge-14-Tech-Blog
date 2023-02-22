@@ -1,9 +1,9 @@
 {{#each blogs as |blog|}}
 <a href="/blog/{{blog.id}}">
-  <div class="card">
+  <div class="card mb-5">
     <header class="card-header p-3">
       <p class="card-header-title">{{blog.title}}</p>
-      <p class="has-text-right m-auto pr-2">Posted by {{blog.user.username}} on {{format_time blog.date_created}} </p>
+      <p class="has-text-right m-auto pr-2">Posted by {{blog.user.username}} on {{format_date blog.date_created}} </p>
     </header>
     <div class="card-content">
       <p>{{blog.content}}</p>
