@@ -2,9 +2,9 @@ const newCommentHandler = async (event) => {
   event.preventDefault();
 
   const comments = document.querySelector('#blog-comment').value.trim();
-  const blog_id = event.target.getAttribute('data-id')
+  const blog_id = document.getElementById('comment-blog').getAttribute('data-id');
 
-  if (comment) {
+  if (comments) {
     const response = await fetch(`/api/comments`, {
       method: 'POST',
       body: JSON.stringify({ comments, blog_id }),
@@ -14,7 +14,7 @@ const newCommentHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace(`/home/${blog_id}`);
+      document.location.replace(`/blog/${blog_id}`);
     } else {
       alert('Failed to comment on blog');
     }

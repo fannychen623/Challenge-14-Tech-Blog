@@ -1,19 +1,19 @@
-<div class="card">
+<div class="card mb-5">
   <header class="card-header p-3">
     <p class="card-header-title">{{blog.title}}</p>
-    <p class="has-text-right m-auto pr-2">Posted by {{blog.user.username}} on {{blog.date_created}} </p>
+    <p class="has-text-right m-auto pr-2">Posted by {{blog.user.username}} on {{format_date blog.date_created}} </p>
   </header>
   <div class="card-content">
     <p class="content">{{blog.content}}</div>
   </div>
 </div>
 
-{{#if Comment.length}}
-  {{#each comments as |comment|}}
-    <div class="card">
+{{#if blog.comments.length}}
+  {{#each blog.comments as |comment|}}
+    <div class="card mb-5">
       <div class="card-content">
         <p>{{comment.comments}}</p></br>
-        <p>-{{comment.user.username}}, {{comment.date_created}}</p>
+        <p>-{{comment.user.username}}, {{format_date comment.date_created}}</p>
       </div>
     </div>
   {{/each}}
@@ -28,15 +28,15 @@
         <div class="field">
           <label class="label">Comment</label>
           <div class="control">
-            <textarea class="textarea is-small" id="blog-comment" name="blog-comment"></textarea>
+            <textarea class="textarea is-small is-size-6" id="blog-comment" name="blog-comment"></textarea>
           </div>
         </div>
         <div class="field mb-2">
-            <button type="submit" class="button is-fullwidth has-text-white" data-id="{{blog.id}}">Submit</button>
+            <button type="submit" id="comment-blog" class="button is-fullwidth has-text-white" data-id="{{blog.id}}">Submit</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<script src="./js/comment.js"></script>
+<script src="/js/comment.js"></script>

@@ -8,22 +8,22 @@
                 <div class="field">
                     <label class="label">Title</label>
                     <div class="control">
-                        <input class="input" type="text" id="blog-title" name="blog-title" placeholder="{{blog.title}}">
+                        <input class="input" type="text" id="blog-title" name="blog-title" value="{{blog.title}}">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Content</label>
                     <div class="control">
-                        <textarea class="textarea is-small" id="blog-content" name="blog-content" placeholder="{{blog.content}}"></textarea>
+                        <textarea class="textarea is-small is-size-6" id="blog-content" name="blog-content">{{blog.content}}</textarea>
                     </div>
                 </div>
                 <div class="field mb-2">
-                    <button type="submit" class="button is-fullwidth has-text-white mb-3" style="background-color: #6a6a6a;" data-id="{{blog.id}}">Update Post</button>
-                    <button class="button is-fullwidth has-text-white delete-blog" style="background-color: #6a6a6a;">Delete Post</button>
+                    <button type="submit" id="update-blog" class="button is-fullwidth has-text-white mb-3" style="background-color: #6a6a6a;" data-id="{{blog.id}}">Update Post</button>
                 </div>
             </form>
+            <button class="button is-fullwidth has-text-white delete-blog" style="background-color: #6a6a6a;" data-id="{{blog.id}}">Delete Post</button>
         </div>
     </div>
 </div>
 
-<script src="./js/dashboard.js"></script>
+<script src="/js/updateBlog.js"></script>

@@ -15,16 +15,23 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-router.put('/', withAuth, async (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
   try {
-    const newBlog= await Blog.update({
-      ...req.body,
-      user_id: req.session.user_id,
+    const blogData = await Blog.update(req.body, {
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
     });
 
-    res.status(200).json(newBlog);
+    if (!blogData) {
+      res.status(404).json({ message: 'No blog found with this id!' });
+      return;
+    }
+
+    res.status(200).json(blogData);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 

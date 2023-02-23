@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -30,26 +30,27 @@ router.get('/', async (req, res) => {
 router.get('/blog/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
       include: [
         {
           model: User,
           attributes: ['username'],
         },
-        // {
-        //   model: Comment,
-        //   attributes: ['comments', 'date_created'],
-        // },
+        {
+          model: Comment, 
+            include: [
+              {
+                model: User,
+                attributes: ['username'],
+              }
+            ] ,
+        }
       ],
     });
 
     const blog = blogData.get({ plain: true });
 
     res.render('commentBlog', {
-      ...blog,
+      blog,
       logged_in: true
     });
   } catch (err) {
@@ -80,17 +81,12 @@ router.get('/dashboard', withAuth, async (req, res) => {
 // Use withAuth middleware to prevent access to route
 router.get('/dashboard/:id', withAuth, async (req, res) => {
   try {
-    const blogData = await Blog.findByPk(req.params.id, {
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
+    const blogData = await Blog.findByPk(req.params.id);
 
     const blog = blogData.get({ plain: true });
 
     res.render('updateBlog', {
-      ...blog,
+      blog,
       logged_in: true
     });
   } catch (err) {
