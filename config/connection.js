@@ -5,6 +5,7 @@ let sequelize;
 
 // Define SQL database with secure .env file
 if (process.env.JAWSDB_URL) {
+  // JAWSDB URL used for deployment
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
   sequelize = new Sequelize(
