@@ -1,22 +1,40 @@
-# 14 Model-View-Controller (MVC): Tech Blog
+# Module 14 Challenge - Model-View-Controller (MVC): The Tech Blog
 
-## Your Task
-
-Writing about tech can be just as important as making it. Developers spend plenty of time creating new applications and debugging existing codebases, but most developers also spend at least some of their time reading and writing about technical concepts, recent advancements, and new technologies. A simple Google search for any concept covered in this course returns thousands of think pieces and tutorials from developers of all skill levels!
-
-Your task this week is to build a CMS-style blog site similar to a Wordpress site, where developers can publish their blog posts and comment on other developers’ posts as well. You’ll build this site completely from scratch and deploy it to Heroku. Your app will follow the MVC paradigm in its architectural structure, using Handlebars.js as the templating language, Sequelize as the ORM, and the express-session npm package for authentication.
-
+>**Application Link:** [The Tech Blog](https:/)
+>
+>**View:** [Description](#description) / [Application Details](#application-details) / [Application Page Preview](#application-page-preview)
+>
+>**Application Preview:**
+>
+>![The Tech Blog](./assets/images/Tech%20Blog.gif "The Tech Blog")
+> 
+## **DESCRIPTION**
+> Topic Assessed: **MVC** - **handlebars, helpers, partials, sessions, cookies, session storage, etc.**
+### **My Task**
+*The Tech Blog* a CMS-style blog site, where developers can publish their blog posts and comment on other developers’ posts as well.
+> 
+> Create the application from scratch.
+>
+> Organize the directory to fit MVC conventions.
+>
+> Create handlebars for each page.
+>
+> Create database, models, and seeds. 
+>
+> Create helper functions and public js files.
+> 
+> Connect to server and complete the API routes to Perform CRUD Operations.
+>
+> Sync Sequelize to the Database on Server Start.
+> 
 ## User Story
-
-```md
+```
 AS A developer who writes about tech
 I WANT a CMS-style blog site
 SO THAT I can publish articles, blog posts, and my thoughts and opinions
 ```
-
 ## Acceptance Criteria
-
-```md
+```
 GIVEN a CMS-style blog site
 WHEN I visit the site for the first time
 THEN I am presented with the homepage, which includes existing blog posts if any have been posted; navigation links for the homepage and the dashboard; and the option to log in
@@ -52,81 +70,114 @@ WHEN I am idle on the site for more than a set time
 THEN I am able to view comments but I am prompted to log in again before I can add, update, or delete comments
 ```
 
-## Mock-Up
+## **APPLICATION DETAILS**
+### server.js Information
+* **require**: Defined external and local packages used.
+  * `path`, `express`, `express-session`, `express-handlebars`, `routes`, `helpers`
+* **port**: Defined the default port as 3001 when no process port is available.
+* **handlebars**: Set up Handlebars.js engine with custom helpers.
+* **session**: Defined session infor and time limit.
+* **sequelize**: Synced sequelize models to the database and launched the server.
 
-The following animation demonstrates the application functionality:
+### models Information
+* **User.js**:
+  * `id`: integer, not null, primary key, auto-increment 
+  * `username`: string, not null
+  * `password`: string, not null, validate len[8]
+  * Encrypt password with `bycrypt`
+    * Hooks to hash password before create and update
+* **Blog.js**: 
+  * `id`: integer, not null, primary key, auto-increment 
+  * `title`: string, not null
+  * `content`: string, not null
+  * `date_created`: date, not null, default now
+  * `user_id`: integer, references user_id
+* **Comment.js**: 
+  * `id`: integer, not null, primary key, auto-increment 
+  * `comments`: string, not null
+  * `date_created`: date, not null, default now
+  * `user_id`: integer, references user_id
+  * `blog_id`: integer, references blog_id
+* **index.js**: 
+  * `User hasMany Blog`: foreignKey user_id, cascade on delete
+  * `Blog belongsTo User`: foreignKey user_id
+  * `User hasMany Comment`: foreignKey user_id, cascade on delete
+  * `Comment belongsTo User`: foreignKey user_id
+  * `Blog hasMany Comment`: foreignKey blog_id, cascade on delete
+  * `Comment belongsTo Blog`: foreignKey blog_id
 
-![Animation cycles through signing into the app, clicking on buttons, and updating blog posts.](./Assets/14-mvc-homework-demo-01.gif) 
+### homeRoutes Information
+* **get('/')**: get blog data and serialize to pass into template
+  * include [{ model: User }]
+  * renders 'homepage'
+* **get('/blog:id')**: get blog data by id and serialize to pass into template
+  * include [{ model: User } , {model: Comment}]
+  * renders 'commentBlog'
+* **get('/dashboard')**: get blog data by session's user_id and serialize to pass into template
+  * include [{ model: Blog }]
+  * renders 'dashboard'
+* **get('/dashboard:id')**: get blog data by id and serialize to pass into template
+  * renders 'updateBlog'
+* **get('/newBlog')**: renders 'newBlog'
+* **get('/login')**: check session and render 'dashboard'
+* **get('/signup')**: check session and render 'dashboard'
 
-## Getting Started
+### api routes Information
+* **userRoutes.js**: signup, login, and logout requests paths
+  * `post('/')`: POST new account to User
+  * `post('/login')`: Verify username and password
+    * Create session
+  * `post('/logout')`: Destroy session
+* **blogRoutes.js**: create, update, and delete blog requests path
+  * `post('/')`: POST new blog to Blog
+  * `put('/:id')`: Update blog based on id
+  * `delete('/:id')`: Delete blog based on id
+* **commentRoutes.js**: create new comment request path
+  * `post('/')`: POST new comment to Comment
+* **index.js**: Define route of api requests.
 
-Your application’s folder structure must follow the Model-View-Controller paradigm. You’ll need to use the [express-handlebars](https://www.npmjs.com/package/express-handlebars) package to implement Handlebars.js for your Views, use the [MySQL2](https://www.npmjs.com/package/mysql2) and [Sequelize](https://www.npmjs.com/package/sequelize) packages to connect to a MySQL database for your Models, and create an Express.js API for your Controllers.
+### Handlebar Information
+* **main.handlebar**: Includes page header and logout script.
+  * Includes sublayout to render other pages/paths.
+* **commentBlog.handlebar**: Specific blog page with comment form
+* **dashboard.handlebar**: User's dashboard with their blogs and function to create new blog
+* **homepage.handlebar**: Main page with all posted blogs
+* **login.handlebar**: Login page with signup page link
+* **newBlog.handlebar**: Create new blog page with update and delete buttons.
+* **signup.handlebar**: Sign up page with login page link
+* **updateBlog.handlebar**: Update and delete form of single blog beloinging to user.
 
-You’ll also need the [dotenv package](https://www.npmjs.com/package/dotenv) to use environment variables, the [bcrypt package](https://www.npmjs.com/package/bcrypt) to hash passwords, and the [express-session](https://www.npmjs.com/package/express-session) and [connect-session-sequelize](https://www.npmjs.com/package/connect-session-sequelize) packages to add authentication.
+### package.json Information
+* **package**: Define the dependencies/packages used in the application.
+  * Dependencies: 
+    * [bcrypt](https://www.npmjs.com/package/dotenv), version ^5.0.0
+    * [connection-session-sequelize](https://www.npmjs.com/package/dotenv), version ^7.0.4
+    * [dotenv](https://www.npmjs.com/package/dotenv), version ^8.2.0
+    * [express](https://www.npmjs.com/package/express), version ^4.17.1
+    * [express-handlebars](https://www.npmjs.com/package/dotenv), version ^5.2.0
+    * [express-session](https://www.npmjs.com/package/express), version ^1.17.1
+    * [mysql2](https://www.npmjs.com/package/mysql), version ^2.2.5
+    * [sequelize](https://www.npmjs.com/package/sequelize), version ^6.3.5
 
-**Note**: The [express-session](https://www.npmjs.com/package/express-session) package stores the session data on the client in a cookie. When you are idle on the site for more than a set time, the cookie will expire and you will be required to log in again to start a new session. This is the default behavior and you do not have to do anything to your application other than implement the npm package.
-
-## Grading Requirements
-
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
+## **APPLICATION PAGE PREVIEW**
+### Home Page
+>![Home](./assets/images/homepage.png "Home")
 >
-> * A repository that has no code
+### Login Page
+>![Login](./assets/images/login%20page.png "Login")
 >
-> * A repository that includes a unique name but nothing else
+### Sign Up Page
+>![Sign Up](./assets/images/signup%20page.png "Signup")
 >
-> * A repository that includes only a README file but nothing else
+### Dashboard Page
+>![Dashboard](./assets/images/dashboard%20page.png "Dashboard")
 >
-> * A repository that only includes starter code
-
-This Challenge is graded based on the following criteria:
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the preceding acceptance criteria plus the following:
-
-    * Application’s folder structure follows the Model-View-Controller paradigm.
-
-    * Uses the [express-handlebars](https://www.npmjs.com/package/express-handlebars) package to implement Handlebars.js for your Views.
-
-    * Application must be deployed to Heroku.
-
-### Deployment: 32%
-
-* Application deployed at live URL.
-
-* Application loads with no errors.
-
-* Application GitHub URL submitted.
-
-* GitHub repository contains application code.
-
-### Application Quality: 15%
-
-* User experience is intuitive and easy to navigate.
-
-* User interface style is clean and polished.
-
-* Application resembles the mock-up functionality provided in the Challenge instructions.
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains quality readme file with description, screenshot, and link to deployed application.
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository, with a unique name and a readme describing the project.
-
----
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+### Update Post Page
+>![Update](./assets/images/update%20post%20page.png "Update")
+>
+### New Post Page
+>![New](./assets/images/new%20post%20page.png "New")
+>
+### Post and Comment Page
+>![Comment](./assets/images/comment%20page.png "Comment")
+>

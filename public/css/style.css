@@ -1,56 +1,41 @@
+/* page style, define main colors */
+:root {
+  --green: #d9ead3;
+  --brown: #22100f;
+  --gray: #A7A7A7;
+}
+
 html {
-  background-color: #d9ead3;
+  background-color: var(--green);
 }
 
-header {
-  background-color: #22100f;
+header, .navbar, .card header {
+  background-color: var(--brown);
 }
 
-.navbar {
-  background-color: #22100f;
-}
-
-.navbar a {
-  color: #d9ead3;
-  background-color: #22100f;
-}
-
-a.navbar-item:hover {
-  color: #d9ead3;
-  background-color: #22100f;
-}
-
-.navbar button {
-  color: #d9ead3;
-  background-color: #22100f;
+.navbar a, a.navbar-item:hover, .field button, .navbar button {
+  color: var(--green);
+  background-color: var(--brown);
   border: none;
 }
 
 p span {
-  color: #22100f;
-  background-color: #d9ead3;
-  box-shadow: 5px 5px 0px 1px #A7A7A7;
+  color: var(--brown);
+  background-color: var(--green);
+  box-shadow: 5px 5px 0px 1px var(--gray);
   padding: 10px 15px 10px 15px;
   border-radius: 15px;
 }
+
 .card{
   background: none;
 }
 
 .card-content {
-  color:#22100f;
-  border: 3px solid #22100f;
-}
-
-.card header {
-  background-color: #22100f;
+  color:var(--brown);
+  border: 3px solid var(--brown);
 }
 
 .card header p {
-  color: #d9ead3;
-}
-
-.field button {
-  color: #d9ead3;
-  background-color: #22100f;
+  color: var(--green);
 }

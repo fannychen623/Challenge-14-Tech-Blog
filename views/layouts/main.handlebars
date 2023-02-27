@@ -25,7 +25,12 @@
         </div>
       </div>
     </nav>
+    <!-- Conditionally render header title -->
+    {{#if dashboard}}
+    <p class="is-size-3 has-text-weight-bold ml-5 m-5" id="page-title"><span>Your Dashboard</span></p>
+    {{else}}
     <p class="is-size-3 has-text-weight-bold ml-5 m-5" id="page-title"><span>The Tech Blog</span></p>
+    {{/if}}
   </header>
   <main class="container mt-5">
     <!-- Render the sub layout -->

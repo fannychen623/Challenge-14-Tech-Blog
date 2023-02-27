@@ -1,10 +1,13 @@
 const router = require('express').Router();
 const { Blog, User, Comment } = require('../models');
+
+// helper function to check that user is logged in
 const withAuth = require('../utils/auth');
 
+// get request for homepage
 router.get('/', async (req, res) => {
   try {
-    // Get all projects and JOIN with user data
+    // Get all blogs and JOIN with user data
     const blogData = await Blog.findAll({
       include: [
         {
@@ -20,6 +23,7 @@ router.get('/', async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogs, 
+      dashboard: false,
       logged_in: req.session.logged_in 
     });
   } catch (err) {
@@ -27,8 +31,10 @@ router.get('/', async (req, res) => {
   }
 });
 
+// get request for individual blogs
 router.get('/blog/:id', withAuth, async (req, res) => {
   try {
+    // Get all blogs and JOIN with user and comment data
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
@@ -47,10 +53,13 @@ router.get('/blog/:id', withAuth, async (req, res) => {
       ],
     });
 
+    // Serialize data so the template can read it
     const blog = blogData.get({ plain: true });
 
+    // Pass serialized data and session flag into template
     res.render('commentBlog', {
       blog,
+      dashboard: false,
       logged_in: true
     });
   } catch (err) {
@@ -67,10 +76,13 @@ router.get('/dashboard', withAuth, async (req, res) => {
       include: [{ model: Blog }],
     });
 
+    // Serialize data so the template can read it
     const user = userData.get({ plain: true });
 
+    // Pass serialized data and session flag into template
     res.render('dashboard', {
       ...user,
+      dashboard: true,
       logged_in: true
     });
   } catch (err) {
@@ -83,10 +95,13 @@ router.get('/dashboard/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id);
 
+    // Serialize data so the template can read it
     const blog = blogData.get({ plain: true });
 
+    // Pass serialized data and session flag into template
     res.render('updateBlog', {
       blog,
+      dashboard: true,
       logged_in: true
     });
   } catch (err) {
@@ -94,8 +109,10 @@ router.get('/dashboard/:id', withAuth, async (req, res) => {
   }
 });
 
+// Pass session flag into template
 router.get('/newBlog', (req, res) => {
   res.render('newBlog', {
+    dashboard: true,
     logged_in: true
   });
 });
@@ -106,7 +123,6 @@ router.get('/login', (req, res) => {
     res.redirect('dashboard');
     return;
   }
-
   res.render('login');
 });
 
@@ -116,7 +132,6 @@ router.get('/signup', (req, res) => {
     res.redirect('dashboard');
     return;
   }
-
   res.render('signup');
 });
 

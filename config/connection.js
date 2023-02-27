@@ -3,6 +3,7 @@ require('dotenv').config();
 
 let sequelize;
 
+// Define SQL database with secure .env file
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
