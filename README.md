@@ -1,6 +1,7 @@
 # Module 14 Challenge - Model-View-Controller (MVC): The Tech Blog
 
 >**Application Link:** [The Tech Blog](https://challenge14-the-tech-blog.herokuapp.com/)
+>>**Note**: When creating an account, password must be at least 8 characters in length.
 >
 >**View:** [Description](#description) / [Application Details](#application-details) / [Application Page Preview](#application-page-preview)
 >
