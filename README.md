@@ -1,6 +1,6 @@
 # Module 14 Challenge - Model-View-Controller (MVC): The Tech Blog
 
->**Application Link:** [The Tech Blog](https:/)
+>**Application Link:** [The Tech Blog](https://challenge14-the-tech-blog.herokuapp.com/)
 >
 >**View:** [Description](#description) / [Application Details](#application-details) / [Application Page Preview](#application-page-preview)
 >
